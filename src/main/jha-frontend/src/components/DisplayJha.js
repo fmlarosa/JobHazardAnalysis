@@ -12,7 +12,7 @@ const DisplayJha = (props) => {
             <Row className="flex-fill bg-light border" >
                 <Col sm={5}>Title: {props.title}</Col>
                 <Col sm={5}>Written By: {props.author}</Col>
-                <Col sm={1}className='d-md-block d-sm-none'>Tasks<Link to={`/editJha/${props.title}`} className="btn btn-secondary"><i class="fas fa-regular fa-file-pen"></i></Link></Col>
+                <Col sm={1}className='d-md-block d-sm-none'><Link to={`/editJha/${props.title}`} className="btn btn-secondary"><i class="fas fa-regular fa-file-pen"></i></Link></Col>
                 <Col sm={1}className='d-md-block d-sm-none'><Button onClick={props.deleteJha} variant="danger"><i class="fas fa-regular fa-trash"></i></Button></Col>
             </Row>
         </Container>
