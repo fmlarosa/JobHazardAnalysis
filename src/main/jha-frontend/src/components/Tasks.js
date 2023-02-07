@@ -62,7 +62,7 @@ const Tasks = () => {
                 return (
                     <Row className="flex-fill bg-light border">
                         <Col sm={2}>
-                            <p>Step {(i + 1)}: {task.step}</p>
+                            <p><b>Step {(i + 1)}:</b> {task.step}</p>
                         </Col>
                         <Col>
                             <Hazards taskID={task.taskID}/>

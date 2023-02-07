@@ -21,7 +21,7 @@ const SafeGuards = (props) => {
     }, [props.hazardID]);
     return (
         <>
-            <p>SafeGuards:</p>
+            <p><b>SafeGuards:</b></p>
             <ul>  
                 {safeGuards.map(safeGuard => {
                     return  (<li>{safeGuard.safetyPrecaution}</li>)
