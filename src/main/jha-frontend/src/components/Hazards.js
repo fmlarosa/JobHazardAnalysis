@@ -60,7 +60,7 @@ const Hazards = (props) => {
             <Row className="d-flex flex-wrap">
                 {hazards.map((hazard) => {
                     return  (<Col sm={3}>
-                                <p><b>Hazard:</b></p>{hazard.danger}<SafeGuards hazardID={hazard.hazardID}></SafeGuards>
+                                <p className="mb-0"><b>Hazard:</b></p>{hazard.danger}<SafeGuards hazardID={hazard.hazardID}></SafeGuards>
                             </Col>)
                     })}
             </Row>
