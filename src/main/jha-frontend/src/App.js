@@ -10,9 +10,9 @@ function App() {
     <BrowserRouter>
       <Header></Header>
       <Routes>
-      <Route path='/' element={<AllJobHazards/>}></Route>
-      <Route path='/createJha' element={<CreateJha/>}></Route>
-      <Route path='/editJha/:title' element={<Tasks/>}></Route>
+        <Route path='/' element={<AllJobHazards/>}></Route>
+        <Route path='/createJha' element={<CreateJha/>}></Route>
+        <Route path='/editJha/:title' element={<Tasks/>}></Route>
       </Routes>
     </BrowserRouter> 
   );

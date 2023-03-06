@@ -7,11 +7,32 @@ import Col from 'react-bootstrap/Col';
 import Hazards from './Hazards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import SafeGuards from './SafeGuards';
+import UpdateComponent from './UpdateComponent';
 
 const Tasks = () => {
     const {title} = useParams();
     const [tasks, setTasks] = useState([]);
     const [step, setStep] = useState('');
+    const [updateVisibility, setUpdateVisibility] = useState(false);
+    const [updateType, setUpdateType] = useState('');
+    const [updateID, setUpdateID] = useState(0);
+
+    useEffect(() => {
+        const getTasks = async () => {
+            const response = await axios.get(`http://localhost:8080/task/${title}`)
+            try {
+                const jhaTasks = response.data.map(task => {
+                    return task;
+                })
+                setTasks(jhaTasks);
+                setStep('');
+            } catch (err){
+                console.log("Error retrieving tasks ", err);
+            }
+        }
+        getTasks();
+    }, [title]);
 
     const makeNewStep = async () => {
         // eslint-disable-next-line no-restricted-globals
@@ -21,25 +42,30 @@ const Tasks = () => {
             const addNewStep = tasks.concat(response.data);
             setTasks(addNewStep);
         } catch (err) {
-            console.log("The response message is ", response.message)
+            console.log("The response message is ", err)
         }
     }
 
-    useEffect(() => {
-        const getTasks = async () => {
-            const response = axios.get(`http://localhost:8080/task/${title}`)
-            try {
-                const jhaTasks = (await response).data.map(task => {
-                    return task;
-                })
-                setTasks(jhaTasks);
-                setStep('');
-            } catch (err){
-                console.log("Error retrieving tasks", err);
+    const changeVisibility = () => {
+        updateVisibility ? setUpdateVisibility(false) : setUpdateVisibility(true);
+    }
+
+    const deleteTask = async (taskID) => {
+        const response = await axios.delete(`http://localhost:8080/task/${taskID}`);
+        try {
+            if (response.status === 204) {
+                const newTasks = tasks.filter(task => {
+                    if (task.taskID !== taskID){
+                        return task;
+                    }
+                });
+                setTasks(newTasks);
             }
         }
-        getTasks();
-    }, [title]);
+        catch (err) {
+            console.log("Error with deleting Task: ", err);
+        }
+    }
 
     return(
         <Container>
@@ -65,11 +91,18 @@ const Tasks = () => {
                             <p><b>Step {(i + 1)}:</b> {task.step}</p>
                         </Col>
                         <Col>
-                            <Hazards taskID={task.taskID}/>
+                            <Hazards taskID={task.taskID} setUpdateType={() => {setUpdateType('hazard')}} setUpdateID={(id) => {setUpdateID(id)}} visibility={changeVisibility}/>
+                        </Col>
+                        <Col>
+                            <SafeGuards taskID={task.taskID} setUpdateType={() => {setUpdateType('safeGuard')}} setUpdateID={(id) => {setUpdateID(id)}} visibility={changeVisibility}></SafeGuards>
+                        </Col>
+                        <Col className="text-end">
+                            <Button class="p-0" onClick={() => {deleteTask(task.taskID)}} variant="danger"><i class="fas fa-regular fa-trash fa-sm"></i></Button>
                         </Col>
                     </Row>
                 )
             })}
+            {updateVisibility && <UpdateComponent visibility={changeVisibility} updateType={updateType} updateID={updateID}></UpdateComponent>}
         </Container>
     )
 }

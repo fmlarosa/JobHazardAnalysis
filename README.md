@@ -17,5 +17,3 @@ Open [http://localhost:8080](http://localhost:8080) to view it in your browser.
 
 As you will see, I did not have a chance to implement all of the CRUD functionality on the FrontEnd.
 However please note the Server DOES have complete CRUD capabilites created, I just did not have time to implement them all into React.
-
-### `NOTE: I have only run this application on Windows, I do not yet know if running on MacOS/Linux will yield any unexpected results`

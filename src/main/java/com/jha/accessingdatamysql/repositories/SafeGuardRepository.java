@@ -6,7 +6,7 @@ import com.jha.accessingdatamysql.Entities.Safeguard;
 import jakarta.transaction.Transactional;
 
 public interface SafeGuardRepository extends CrudRepository<Safeguard, Integer>{
-    List<Safeguard> findByHazardHazardID(Integer hazardID);
+    List<Safeguard> findByTaskTaskID(Integer TaskID);
     Safeguard findBySafeguardID(Integer safeguardID);
     @Transactional
     Integer deleteBySafeguardID(Integer safeguardID);

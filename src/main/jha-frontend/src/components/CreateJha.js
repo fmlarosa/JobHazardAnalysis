@@ -17,7 +17,7 @@ const CreateJha = () => {
         try{
             navigate("/")
         } catch (err) {
-            console.log("The response message is ", err)
+            console.log("The error message is ", err)
             alert("Title is already being used, please change");
         }
     }

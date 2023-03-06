@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.jha.Exceptions.ItemAlreadyExistsException;
 import com.jha.Exceptions.ItemNotFoundException;
-import com.jha.accessingdatamysql.Entities.Hazard;
 import com.jha.accessingdatamysql.Entities.Safeguard;
-import com.jha.accessingdatamysql.repositories.HazardRepository;
+import com.jha.accessingdatamysql.Entities.Task;
 import com.jha.accessingdatamysql.repositories.SafeGuardRepository;
+import com.jha.accessingdatamysql.repositories.TaskRepository;
 import jakarta.validation.Valid;
 
 @RestController 
 @RequestMapping(path="/safeGuard") 
 public class SafeGuardController {
     @Autowired 
-    private HazardRepository hazardRepository;
+    private TaskRepository taskRepository;
     @Autowired 
     private SafeGuardRepository safeGuardRepository;
 
-    @GetMapping("/{hazardID}")
-    public ResponseEntity<List<Safeguard>> getAllSafeGuardsByHazardID(@PathVariable(value = "hazardID") Integer hazardID) {
-      List<Safeguard> safeGuards = safeGuardRepository.findByHazardHazardID(hazardID);
+    @GetMapping("/{taskID}")
+    public ResponseEntity<List<Safeguard>> getAllSafeGuardsByHazardID(@PathVariable(value = "taskID") Integer taskID) {
+      List<Safeguard> safeGuards = safeGuardRepository.findByTaskTaskID(taskID);
       return new ResponseEntity<>(safeGuards, HttpStatus.OK);
     }
 
-    @PostMapping(path="/{hazardID}") 
-    public ResponseEntity<Safeguard> addNewSafeGuard(@PathVariable(value = "hazardID") Integer hazardID,
+    @PostMapping(path="/{taskID}") 
+    public ResponseEntity<Safeguard> addNewSafeGuard(@PathVariable(value = "taskID") Integer taskID,
         @Valid @RequestParam String safetyPrecaution) {
             
-            List<Safeguard> safeGuards = safeGuardRepository.findByHazardHazardID(hazardID);
+            List<Safeguard> safeGuards = safeGuardRepository.findByTaskTaskID(taskID);
             boolean safeGuardAlreadyAdded = safeGuards.stream().anyMatch(safeGuard -> safetyPrecaution.equals(safeGuard.getSafetyPrecaution()));
             if (safeGuardAlreadyAdded){
               throw new ItemAlreadyExistsException("The precation "  + safetyPrecaution + " already exists for this hazard");
             }
 
-            Hazard hazard = hazardRepository.findByHazardID(hazardID);
+            Task task = taskRepository.findByTaskID(taskID);
             Safeguard newSafeGuard = new Safeguard();
-            newSafeGuard.setHazard(hazard);
+            newSafeGuard.setTask(task);
             newSafeGuard.setSafetyPrecaution(safetyPrecaution);
             safeGuardRepository.save(newSafeGuard);
             return new ResponseEntity<Safeguard>(newSafeGuard, HttpStatus.CREATED);

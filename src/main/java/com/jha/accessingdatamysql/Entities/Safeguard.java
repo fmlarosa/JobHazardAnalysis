@@ -26,19 +26,19 @@ public class Safeguard {
     @NotNull @NotBlank
     private String safetyPrecaution;
 
-    //Foreign Key to match SafeGuards to one Hazard
+    //Foreign Key to match SafeGuards to one Task
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="HazardID", nullable = false)
+    @JoinColumn(name="TaskID", nullable = false)
     @JsonIgnore
-    private Hazard hazard;
+    private Task task;
     
 
-    public Hazard getHazard() {
-        return hazard;
+    public Task getTask() {
+        return task;
     }
 
-    public void setHazard(Hazard hazard) {
-        this.hazard = hazard;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public String getSafetyPrecaution() {

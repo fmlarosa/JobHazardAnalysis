@@ -29,7 +29,7 @@ public class Task {
 
     //Foreign Key to match Tasks to one JHA
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="title", nullable = false)
+    @JoinColumn(name="JhaID", nullable = false)
     @JsonIgnore
     private JHA jha;
     
